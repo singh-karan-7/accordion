@@ -88,6 +88,7 @@ export 'accordion_section.dart';
 /// ```
 class Accordion extends StatelessWidget with CommonParams {
   final List<AccordionSection> children;
+  final ScrollController? scrollController;
   final double paddingListHorizontal;
   final double paddingListTop;
   final double paddingListBottom;
@@ -99,6 +100,7 @@ class Accordion extends StatelessWidget with CommonParams {
     Key? key,
     int? maxOpenSections,
     required this.children,
+    this.scrollController,
     int? initialOpeningSequenceDelay,
     Color? headerBackgroundColor,
     Color? headerBackgroundColorOpened,
@@ -170,7 +172,8 @@ class Accordion extends StatelessWidget with CommonParams {
     final listCtrl = Get.put(ListController(), tag: hashCode.toString());
     return ListView.builder(
       itemCount: children.length,
-      controller: listCtrl.controller,
+      controller:
+          scrollController != null ? scrollController : listCtrl.controller,
       shrinkWrap: true,
       physics: disableScrolling
           ? const NeverScrollableScrollPhysics()
